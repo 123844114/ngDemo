@@ -1,0 +1,21 @@
+<div ng-include="'tpl/include/header.html'" class="bg-success header"></div>
+<div class="container" style="margin-top: 40px;">
+    <h1>我的订单</h1>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="data in orderListArr">
+            <div class="list-group-item-heading">订单编号：{{data.orderNum}}</div>
+            <div class="media">
+                <a class="pull-left" href="#">
+                    <img ng-src="images/{{data.src}}" alt="" style="width: 150px">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{data.name}}</h4>
+                    <h4>价格：{{data.price}}元</h4>
+                    <button class="btn btn-success">支付</button>
+                    <button class="btn btn-danger">删除</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div ng-include="'tpl/include/footer.html'" class="footer bg-success"></div>

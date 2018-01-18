@@ -1,0 +1,126 @@
+/**
+ * Created by Administrator on 2016/11/10.
+ */
+angular.module('myFood',['ng','ngRoute'])
+    .config(function($routeProvider){
+        $routeProvider.when('/login',{templateUrl:'tpl/login.html',controller:'myFoodLoginCtr'})
+            .when('/main',{templateUrl:'tpl/main.html',controller:'myFoodMainCtr'})
+            .when('/list',{templateUrl:'tpl/list.html',controller:'myFoodListCtr'})
+            .when('/order/:uid',{templateUrl:'tpl/order.html',controller:'myFoodOrderCtr'})
+            .when('/proDetail/:id',{templateUrl:'tpl/proDetail.html',controller:'myFoodDetailCtr'})
+            .when('/userCenter',{templateUrl:'tpl/userCenter.html',controller:'myFoodUserCenterCtr'})
+            .otherwise({redirectTo:'/login'})
+
+    })
+    .controller('myFoodCtr',function($scope,$location){
+        $scope.jumpTo=function(path){
+            $location.path(path)
+        }
+    })
+    .controller('myFoodLoginCtr',function($scope,$rootScope,$http,$location){
+        $scope.isGetLogin=false;
+        $scope.login=function(){//实现登录功能
+            $http({method: 'POST', url: 'php/login.php',params:{'username':$scope.username,'pwd':$scope.pwd}})
+                .success(function(data){
+                    console.log(data)
+                    if(data.length==1){//如果登录成功，则跳转到main页面
+                        $location.path('/main');
+                        $rootScope.userID=data[0].id;
+                        $scope.isGetLogin=false;
+                    }else{//登录失败，提示
+                        $scope.isGetLogin=true;
+                    }
+                })
+                .error(function(msg){})
+      }
+    })
+    .controller('myFoodMainCtr',function($scope,$rootScope,$http){
+        console.log('当前登录用户id：'+$rootScope.userID);
+        //获取后台数据
+        $http.get('php/food_all.php').success(function(data){
+            console.log(data)
+            $scope.proArr=data;
+        })
+    })
+    .controller('myFoodListCtr',function($scope,$http,$location,$rootScope){
+        $scope.ishasMore=false;
+        $scope.isGetSearch=false;
+        var count=4;
+        var start=0;
+        $scope.keyword='';
+        $http.get('php/food_GetByPage.php?start='+start+'&&count='+count).success(function(data){
+
+            $scope.proListArr=data;
+            console.log($scope.proListArr.length)
+        })
+        //加载更多
+        $scope.loadMore=function(){
+            $http.get('php/food_GetByPage.php?start='+$scope.proListArr.length+'&&count='+count).success(function(data){
+                $scope.proListArr=$scope.proListArr.concat(data);
+                    console.log($scope.proListArr)
+                if(data.length<count){
+                    //到最后页，加载完毕了
+                    $scope.ishasMore=true;
+                }
+            })
+        }
+        //$scope.keyword实现搜索input
+        $scope.search=function(){
+            if($scope.keyword!=''&&$scope.keyword.length>0){
+                $http.get('php/food_getByKeyword.php?kw='+$scope.keyword).success(function(data){
+                    console.log(data)
+                    $scope.proListArr=data;
+                    if(data.length==0){
+                        $scope.isGetSearch=true;
+                    }else{
+                        $scope.isGetSearch=false;
+                    }
+                })
+            }
+        }
+        //加入菜单功能
+        $scope.addToOrder=function(id){
+            //console.log($rootScope.userID)
+            //传数据，加入数据库
+            $http.get('php/food_addToOrderList.php?uid='+$rootScope.userID+'&&pid='+id+'&&count=1')
+                .success(function(data){
+                        console.log(data)
+            })
+            //跳转到我的点单页
+            $location.path('/order/'+$rootScope.userID);
+        }
+        //end
+
+
+
+})
+    .controller('myFoodDetailCtr',function($scope,$http,$routeParams){
+        $http.get('php/food_getById.php?id='+$routeParams.id).success(function(data){
+            console.log(data)
+            $scope.data=data;
+        })
+    })
+    .controller('myFoodUserCenterCtr',function($scope,$http){
+        //$scope.uname
+        //$scope.uphone
+        //$scope.uaddress
+        //$scope.upwd
+        $scope.submit=function(){
+            //如果四个输入框都不为空，则将数据提交到服务器
+           if($scope.uname&&$scope.uphone&&$scope.uaddress&&$scope.upwd){
+               $http.get('php/food_getUserCenter.php?uname='+$scope.uname+'&&uphone='+$scope.uphone+'&&uaddress='+$scope.uaddress+'&&upwd='+$scope.upwd)
+                   .success(function(data){
+                       console.log(data)
+                   })
+           }else{
+               alert('数据不能为空')
+           }
+        }
+    })
+    .controller('myFoodOrderCtr',function($scope,$http,$routeParams){
+         $http.get('php/food_getOrderListByUid.php?uid='+$routeParams.uid)
+             .success(function(data){
+                 $scope.orderListArr=data;
+             console.log(data)
+             })
+    })

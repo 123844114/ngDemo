@@ -1,0 +1,65 @@
+<div ng-include="'tpl/include/header.html'" class="bg-success header"></div>
+    <div id="wrapper" style="margin-top: 40px;">
+        <div id="scroller">
+            <ul>
+                <li><img src="images/slide1.jpg"></li>
+                <li><img src="images/slide2.jpg"></li>
+                <li><img src="images/slide3.jpg"></li>
+                <!--<li><img src="images/slide1.jpg"></li>-->
+            </ul>
+        </div>
+        <div id="nav">
+            <ul id="indicator">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" style="color: #ffffff">
+            <div class="col-xs-3 text-center bg1">
+                <span class="glyphicon glyphicon-camera"></span>
+                <p>新闻活动</p>
+            </div>
+            <div class="col-xs-3 text-center bg2">
+                <span class="glyphicon glyphicon-camera"></span>
+                <p>新闻活动</p>
+            </div>
+            <div class="col-xs-3 text-center bg3">
+                <span class="glyphicon glyphicon-camera"></span>
+                <p>新闻活动</p>
+            </div>
+            <div class="col-xs-3 text-center bg4">
+                <span class="glyphicon glyphicon-camera"></span>
+                <p>新闻活动</p>
+            </div>
+        </div>
+    </div>
+    <div class="floor" style="margin-bottom:40px ">
+        <div class="row">
+            <div class="col-xs-6" ng-repeat="data in proArr">
+                <a href="#" class="mainImg">
+                    <img ng-src="images/{{data.src}}" alt="">
+                    <p class="bg1 text-center">{{data.name}}{{data.price}}元</p>
+                    <p class="bg1">{{data.info}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+<script>
+    $(function(){
+        var myScroll = new iScroll('wrapper',{
+            scrollX: true,
+            scrollY: true,
+            hScrollbar: false,
+            momentum: false,
+            snap: true,
+            onScrollEnd:function(){
+                document.querySelector('#indicator > li.active').className = '';
+                document.querySelector('#indicator > li:nth-child(' + (this.currPageX+1) + ')').className = 'active';
+            }
+        })
+    })
+</script>
+<div ng-include="'tpl/include/footer.html'" class="footer bg-success"></div>

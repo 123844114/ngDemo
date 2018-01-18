@@ -1,0 +1,10 @@
+<div ng-include="'tpl/include/header.html'" class="bg-success header"></div>
+    <div class="panel" style="margin-top: 40px">
+        <div class="panel-body">
+            <img ng-src="images/{{data.src}}" alt="">
+            <p>{{data.name}}</p>
+            <p>价格：{{data.price}}</p>
+            <p>详情：{{data.info}}</p>
+        </div>
+        <div class="panel-footer"><button ng-click="jumpTo('/order')">下单</button><button ng-click="jumpTo('/main')">再看看</button></div>
+    </div>

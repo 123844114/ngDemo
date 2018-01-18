@@ -1,0 +1,86 @@
+.loginBlock{
+    margin-top:30%
+}
+.m10{
+    margin-top: 10%;
+}
+p{
+    padding: 0;
+    margin: 0;
+}
+.header{
+    width: 100%;
+    height: 40px;
+    color: #ffffff;
+    font-size: 1.6em;
+    text-align: center;
+    line-height: 50px;
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+}
+.header-ico{
+    position: absolute;
+    right: 15px;
+    line-height: 40px;
+    font-size: 0.8em;
+}
+.bg1{
+    background: #FD664B;
+}
+.bg2{
+    background: #F05E75;
+}
+.bg3{
+    background: #F78F36;
+}
+.bg4{
+    background: #0DC0AD;
+}
+.col-xs-3{
+    padding: 10px 0 0 0;
+}
+.mainImg{
+    display: inline-block;
+    color: #ffffff;
+}
+.floor{
+    width: 100%;
+    overflow: hidden;
+}
+.footer{
+    width: 100%;
+    overflow: hidden;
+    height: 40px;
+    position: fixed;
+    bottom: 0;
+    z-index: 99999
+}
+.footer ul{
+    list-style: none;
+}
+.footer ul li{
+    width: 25%;
+    float: left;
+    height: 40px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 40px;
+}
+.footer ul li a{
+    width: 100%;
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+}
+.list-search{
+    width:100%;;
+    position: relative;
+
+}
+.ico-search{
+    position: absolute;
+    right: 15px;
+    font-size: 1.6em;
+    line-height: 35px;
+}

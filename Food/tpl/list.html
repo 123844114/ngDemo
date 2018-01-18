@@ -1,0 +1,31 @@
+<div ng-include="'tpl/include/header.html'" class="bg-success header"></div>
+<div class="container" style="margin-top: 55px;">
+    <form action="" role="form">
+        <div class="form-group list-search">
+            <input type="text" class="form-control"  placeholder="请输入产品名称"  ng-model="keyword" >
+            <span class="glyphicon glyphicon-search ico-search" ng-click="search()"></span>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <ul class="list-group" ng-hide="isGetSearch">
+        <li class="list-group-item" ng-repeat="data in proListArr">
+            <div class="media">
+                <a class="pull-left" href="#/proDetail/{{data.id}}">
+                    <img ng-src="images/{{data.src}}" alt="" style="width: 150px">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">{{data.info}}</h4>
+                    <h4>价格：{{data.price}}</h4>
+                    <button class="btn btn-success" ng-click='addToOrder(data.id)'>加入菜单</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <p class="alert alert-default" ng-show="isGetSearch">没有该产品信息，请改换其他产品</p>
+</div>
+<div class="container" style="margin-bottom: 40px">
+    <button class="btn btn-block btn-danger" ng-click="loadMore()" ng-hide="ishasMore">加载更多</button>
+    <h4 class="alert alert-danger" ng-show="ishasMore">以上是全部产品信息</h4>
+</div>
+<div ng-include="'tpl/include/footer.html'" class="footer bg-success"></div>
